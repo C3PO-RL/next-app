@@ -1,20 +1,19 @@
-import { Card, Grid, Row, Text } from '@nextui-org/react';
-import { NextPage, GetStaticProps } from 'next';
-import Image from 'next/image';
-import { pokeApi } from '../api';
-import { Layout } from '../components/layouts';
-import { PokemonCard } from '../components/pokemon';
-import { PokemonListResponse, SmallPokemon } from '../interfaces';
+import { Grid } from "@nextui-org/react";
+import { NextPage, GetStaticProps } from "next";
+
+import { pokeApi } from "../api";
+import { Layout } from "../components/layouts";
+import { PokemonCard } from "../components/pokemon";
+import { PokemonListResponse, SmallPokemon } from "../interfaces";
 
 interface Props {
   pokemons: SmallPokemon[];
 }
 
 const HomePage: NextPage<Props> = ({ pokemons }) => {
-  console.log(pokemons);
   return (
-    <Layout title='Listado de Pokemons'>
-      <Grid.Container gap={2} justify='flex-start'>
+    <Layout title="Listado de Pokemons">
+      <Grid.Container gap={2} justify="flex-start">
         {pokemons.map((pokemon) => (
           <PokemonCard key={pokemon.id} pokemon={pokemon} />
         ))}
@@ -24,7 +23,7 @@ const HomePage: NextPage<Props> = ({ pokemons }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const { data } = await pokeApi.get<PokemonListResponse>('/pokemon?limit=151');
+  const { data } = await pokeApi.get<PokemonListResponse>("/pokemon?limit=151");
   console.log(data);
   const pokemons: SmallPokemon[] = data.results.map((poke, i) => ({
     ...poke,
